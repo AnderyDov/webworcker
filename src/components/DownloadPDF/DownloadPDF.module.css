@@ -1,0 +1,21 @@
+.block {
+	cursor: pointer;
+
+	translate: 0 -2px;
+
+	width: 5.2rem;
+	height: 5.2rem;
+	margin-right: 0.4rem;
+
+	fill: var(--text);
+}
+
+/* эффект наведения для иконок */
+.block:hover {
+	fill: var(--hover);
+}
+
+/* эффект активно для иконок */
+.block:active {
+	fill: var(--active);
+}
