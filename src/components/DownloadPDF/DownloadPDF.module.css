@@ -19,3 +19,9 @@
 .block:active {
 	fill: var(--active);
 }
+
+/* эффект отключения */
+.disabled {
+	pointer-events: none;
+	fill: var(--bg-panel);
+}

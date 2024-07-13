@@ -8,3 +8,29 @@
 	height: 100%;
 	padding: 2rem;
 }
+
+.icon {
+	width: 200px;
+	height: 200px;
+
+	fill: var(--text);
+
+	animation-name: ttt;
+	animation-duration: 3s;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+}
+
+.icon:hover {
+	fill: var(--hover);
+}
+
+@keyframes ttt {
+	0% {
+		rotate: 0deg;
+	}
+
+	100% {
+		rotate: 360deg;
+	}
+}
