@@ -30,7 +30,7 @@ onmessage = e => {
 		fontSize: 8,
 	};
 
-	for (let i = 0; i < 20; i++) {
+	for (let i = 0; i < 5; i++) {
 		const doc = new jsPDF();
 		/** Установка начальных настроект документа */
 		doc.setProperties({
@@ -71,7 +71,7 @@ onmessage = e => {
 		y += 8;
 
 		let body_attrs = [];
-		for (let i = 0; i < 10; i++) {
+		for (let i = 0; i < 20000; i++) {
 			body_attrs.push(['1', '2', '3']);
 		}
 
