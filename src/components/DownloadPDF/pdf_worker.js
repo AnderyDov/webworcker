@@ -30,48 +30,49 @@ onmessage = e => {
 		fontSize: 8,
 	};
 
-	for (let i = 0; i < 5; i++) {
-		const doc = new jsPDF();
-		/** Установка начальных настроект документа */
-		doc.setProperties({
-			title: 'Web Worker pdf',
-			author: 'Web Worker pdf',
-			subject: 'Web Worker pdf',
-			keywords: '',
-			creator: 'jsPDF',
-		});
-		doc.setLanguage('ru-MO');
+	const doc = new jsPDF();
+	/** Установка начальных настроект документа */
+	doc.setProperties({
+		title: 'Web Worker pdf',
+		author: 'Web Worker pdf',
+		subject: 'Web Worker pdf',
+		keywords: '',
+		creator: 'jsPDF',
+	});
+	doc.setLanguage('ru-MO');
 
-		/** Установка курсора */
-		let x = 15;
-		let y = 10;
+	/** Установка курсора */
+	let x = 15;
+	let y = 10;
 
-		/** Добавление шрифтов */
-		doc.addFont(regular, 'regular', 'normal');
-		doc.addFont(bold, 'bold', 'normal');
-		doc.addFont(black, 'black', 'normal');
+	/** Добавление шрифтов */
+	doc.addFont(regular, 'regular', 'normal');
+	doc.addFont(bold, 'bold', 'normal');
+	doc.addFont(black, 'black', 'normal');
 
-		/** Добавление изображения в документ */
-		let img = '/logo.png';
-		doc.addImage(img, 'PNG', x, y, 35, 0, 'FAST');
+	/** Добавление изображения в документ */
+	let img = '/logo.png';
+	doc.addImage(img, 'PNG', x, y, 35, 0, 'FAST');
 
-		x += 27;
-		y += 12;
+	x += 27;
+	y += 12;
 
-		x = 40;
-		y += 15;
+	x = 40;
+	y += 15;
 
-		doc.setFont('bold');
-		doc.setFontSize(14);
-		doc.setTextColor(20, 20, 20);
-		doc.text('Web Worker Pdf', x, y);
+	doc.setFont('bold');
+	doc.setFontSize(14);
+	doc.setTextColor(20, 20, 20);
+	doc.text('Web Worker Pdf', x, y);
 
-		y += 7;
+	y += 7;
 
-		y += 8;
+	y += 8;
 
+	for (let k = 0; k < 100; k++) {
+		console.log('Str: ', k + 1);
 		let body_attrs = [];
-		for (let i = 0; i < 20000; i++) {
+		for (let i = 0; i < 10000; i++) {
 			body_attrs.push(['1', '2', '3']);
 		}
 
@@ -92,11 +93,12 @@ onmessage = e => {
 			headStyles: headStyles,
 			showHead: 'firstPage',
 		});
-
-		doc.putTotalPages('PAGE_COUNT');
-
-		self.postMessage([doc.output('blob')]);
+		y += 8;
 	}
+
+	doc.putTotalPages('PAGE_COUNT');
+
+	self.postMessage([doc.output('blob')]);
 	self.postMessage({ cmd: 'message', data: 'END' });
 
 	/** Сохранение файла */
