@@ -29,6 +29,7 @@ export function DownloadPDF({ ...props }) {
 				console.log('END');
 				return;
 			}
+			console.log(e.data);
 			let file = new File(e.data, 'WebWorker.pdf', {
 				type: 'application/pdf',
 			});

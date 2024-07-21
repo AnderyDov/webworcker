@@ -6,6 +6,8 @@ import autoTable from 'jspdf-autotable';
 onmessage = e => {
 	console.log(e.data.data);
 
+	let Y = 0;
+
 	/** Подключение шрифтоф */
 	const regular = '/fonts/Inter-Regular.ttf';
 	const bold = '/fonts/Inter-SemiBold.ttf';
@@ -30,7 +32,7 @@ onmessage = e => {
 		fontSize: 8,
 	};
 
-	const doc = new jsPDF();
+	let doc = new jsPDF();
 	/** Установка начальных настроект документа */
 	doc.setProperties({
 		title: 'Web Worker pdf',
@@ -51,8 +53,8 @@ onmessage = e => {
 	doc.addFont(black, 'black', 'normal');
 
 	/** Добавление изображения в документ */
-	let img = '/logo.png';
-	doc.addImage(img, 'PNG', x, y, 35, 0, 'FAST');
+	// let img = '/logo.png';
+	// doc.addImage(img, 'PNG', x, y, 35, 0, 'FAST');
 
 	x += 27;
 	y += 12;
@@ -69,10 +71,10 @@ onmessage = e => {
 
 	y += 8;
 
-	for (let k = 0; k < 100; k++) {
+	for (let k = 0; k < 150; k++) {
 		console.log('Str: ', k + 1);
 		let body_attrs = [];
-		for (let i = 0; i < 10000; i++) {
+		for (let i = 0; i < 30; i++) {
 			body_attrs.push(['1', '2', '3']);
 		}
 
@@ -85,7 +87,7 @@ onmessage = e => {
 				doc.setFillColor('white');
 				doc.rect(90, 285, 40, 20, 'FD');
 				doc.setFont('regular');
-				doc.text(`${doc.getNumberOfPages()}/PAGE_COUNT`, 100, 290);
+				doc.text(`${doc.getNumberOfPages() + Y}/PAGE_COUNT`, 100, 290);
 				y = HookData.cursor.y;
 			},
 			startY: y,
@@ -94,13 +96,39 @@ onmessage = e => {
 			showHead: 'firstPage',
 		});
 		y += 8;
+
+		if (k == 50 || k == 100) {
+			y = 20;
+			Y += doc.getNumberOfPages();
+			console.log(Y);
+			doc.putTotalPages('PAGE_COUNT');
+			let h = doc.output('blob');
+			self.postMessage([h]);
+
+			doc = new jsPDF();
+
+			/** Установка начальных настроект документа */
+			doc.setProperties({
+				title: 'Web Worker pdf',
+				author: 'Web Worker pdf',
+				subject: 'Web Worker pdf',
+				keywords: '',
+				creator: 'jsPDF',
+			});
+			doc.setLanguage('ru-MO');
+
+			/** Установка курсора */
+
+			/** Добавление шрифтов */
+			doc.addFont(regular, 'regular', 'normal');
+			doc.addFont(bold, 'bold', 'normal');
+			doc.addFont(black, 'black', 'normal');
+		}
 	}
-
+	console.log('7777', Y);
 	doc.putTotalPages('PAGE_COUNT');
+	let h = doc.output('blob');
+	self.postMessage([h]);
 
-	self.postMessage([doc.output('blob')]);
 	self.postMessage({ cmd: 'message', data: 'END' });
-
-	/** Сохранение файла */
-	// doc.save('WebWorker.pdf', { returnPromise: true }).then(() => console.log('FINISH'));
 };
