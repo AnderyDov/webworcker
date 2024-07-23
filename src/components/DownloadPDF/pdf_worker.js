@@ -32,7 +32,7 @@ onmessage = e => {
 		fontSize: 8,
 	};
 
-	let doc = new jsPDF();
+	let doc = new jsPDF({ compress: true, putOnlyUsedFonts: true });
 	/** Установка начальных настроект документа */
 	doc.setProperties({
 		title: 'Web Worker pdf',
@@ -71,7 +71,7 @@ onmessage = e => {
 
 	y += 8;
 
-	for (let k = 0; k < 150; k++) {
+	for (let k = 0; k < 500; k++) {
 		console.log('Str: ', k + 1);
 		let body_attrs = [];
 		for (let i = 0; i < 30; i++) {
@@ -87,7 +87,7 @@ onmessage = e => {
 				doc.setFillColor('white');
 				doc.rect(90, 285, 40, 20, 'FD');
 				doc.setFont('regular');
-				doc.text(`${doc.getNumberOfPages() + Y}/PAGE_COUNT`, 100, 290);
+				doc.text(`${doc.getNumberOfPages()}/PAGE_COUNT`, 100, 290);
 				y = HookData.cursor.y;
 			},
 			startY: y,
@@ -97,33 +97,31 @@ onmessage = e => {
 		});
 		y += 8;
 
-		if (k == 50 || k == 100) {
-			y = 20;
-			Y += doc.getNumberOfPages();
-			console.log(Y);
-			doc.putTotalPages('PAGE_COUNT');
-			let h = doc.output('blob');
-			self.postMessage([h]);
+		// if (k == 50 || k == 100) {
+		// 	y = 20;
+		// 	Y += doc.getNumberOfPages();
+		// 	console.log(Y);
+		// 	doc.putTotalPages('PAGE_COUNT');
+		// 	let h = doc.output('blob');
+		// 	self.postMessage([h]);
 
-			doc = new jsPDF();
+		// 	doc = new jsPDF();
 
-			/** Установка начальных настроект документа */
-			doc.setProperties({
-				title: 'Web Worker pdf',
-				author: 'Web Worker pdf',
-				subject: 'Web Worker pdf',
-				keywords: '',
-				creator: 'jsPDF',
-			});
-			doc.setLanguage('ru-MO');
+		// 	/** Установка начальных настроект документа */
+		// 	doc.setProperties({
+		// 		title: 'Web Worker pdf',
+		// 		author: 'Web Worker pdf',
+		// 		subject: 'Web Worker pdf',
+		// 		keywords: '',
+		// 		creator: 'jsPDF',
+		// 	});
+		// 	doc.setLanguage('ru-MO');
 
-			/** Установка курсора */
-
-			/** Добавление шрифтов */
-			doc.addFont(regular, 'regular', 'normal');
-			doc.addFont(bold, 'bold', 'normal');
-			doc.addFont(black, 'black', 'normal');
-		}
+		// 	/** Добавление шрифтов */
+		// 	doc.addFont(regular, 'regular', 'normal');
+		// 	doc.addFont(bold, 'bold', 'normal');
+		// 	doc.addFont(black, 'black', 'normal');
+		// }
 	}
 	console.log('7777', Y);
 	doc.putTotalPages('PAGE_COUNT');
